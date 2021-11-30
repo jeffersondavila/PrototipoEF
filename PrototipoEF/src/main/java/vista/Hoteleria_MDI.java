@@ -23,7 +23,7 @@ import seguridad.vista.Login_LD;
 public class Hoteleria_MDI extends javax.swing.JFrame {
 
     private Mnt_Linea form_Mant_Pisos;
-//    private Mnt_Horarios form_Mant_Horarios;
+    private Mnt_Marca form_Mant_Horarios;
 
     ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
     public static JLabel Jl_logo = new JLabel();
@@ -123,7 +123,7 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
         });
         Mnu_mantenimientos.add(MnI_piso);
 
-        MnI_horario.setText("Mant. Horarios");
+        MnI_horario.setText("Mant. Marca");
         MnI_horario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MnI_horarioActionPerformed(evt);
@@ -189,15 +189,15 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
     }//GEN-LAST:event_MnI_pisoActionPerformed
 
     private void MnI_horarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_horarioActionPerformed
-//        form_Mant_Horarios = new Mnt_Horarios();
-//
-//        Jdp_contenedor.add(form_Mant_Horarios);
-//        Dimension desktopSize = Jdp_contenedor.getSize();
-//        Dimension FrameSize = form_Mant_Horarios.getSize();
-//        form_Mant_Horarios.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
-//        form_Mant_Horarios.setVisible(true);
-//        form_Mant_Horarios.toFront();
-//        bitacora.GuardarEnBitacora("log", "2002");
+        form_Mant_Horarios = new Mnt_Marca();
+
+        Jdp_contenedor.add(form_Mant_Horarios);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = form_Mant_Horarios.getSize();
+        form_Mant_Horarios.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        form_Mant_Horarios.setVisible(true);
+        form_Mant_Horarios.toFront();
+        bitacora.GuardarEnBitacora("log", "2002");
     }//GEN-LAST:event_MnI_horarioActionPerformed
 
     /**

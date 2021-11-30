@@ -1,9 +1,9 @@
 package vista;
 
 import datos.GuardarBitacora;
-import datos.LineaDAO;
+import datos.MarcaDAO;
 import dominio.ProcesosRepetidos;
-import dominio.Linea;
+import dominio.Marca;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -16,16 +16,16 @@ import seguridad.vista.Login_LD;
  *
  * @author Jeff
  */
-public class Mnt_Linea extends javax.swing.JInternalFrame {
+public class Mnt_Marca extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
-    Linea pisos = new Linea();
+    Marca pisos = new Marca();
     GuardarBitacora bitacora = new GuardarBitacora();
 
     /**
      * Creates new form Mnt_¨Pisos
      */
-    public Mnt_Linea() {
+    public Mnt_Marca() {
         initComponents();
         diseño();
         actualizarTabla("");
@@ -33,7 +33,7 @@ public class Mnt_Linea extends javax.swing.JInternalFrame {
     }
 
     public void diseño() {
-        this.setTitle("Mantenimiento de Linea");
+        this.setTitle("Mantenimiento de Marca");
         txtnombre.setBorder(null);
         Txt_buscar.setBorder(null);
         Rdb_Limpiar2.setVisible(false);
@@ -42,16 +42,16 @@ public class Mnt_Linea extends javax.swing.JInternalFrame {
 
     public void actualizarTabla(String codigo) {
         ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
-        LineaDAO.codigoAuxiliar = codigo;
-        LineaDAO.nombreAuxiliar = codigo;
+        MarcaDAO.codigoAuxiliar = codigo;
+        MarcaDAO.nombreAuxiliar = codigo;
         String columnas[] = {"ID", "NOMBRE DE LINEA", "ESTADO"};
         int cantidadcolumnas = columnas.length;
         prcs_repetidos.llenarColumnas(columnas, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
         int tamaño[] = {75, 250, 75};
-        LineaDAO pisosdao = new LineaDAO();
-        List<Linea> piso = pisosdao.select();
-        for (Linea listaServicio : piso) {
+        MarcaDAO pisosdao = new MarcaDAO();
+        List<Marca> piso = pisosdao.select();
+        for (Marca listaServicio : piso) {
             datos[0] = String.valueOf(listaServicio.getCodigo());
             datos[1] = String.valueOf(listaServicio.getNombre());
             if (String.valueOf(listaServicio.getEstado()).equals("1")) {
@@ -529,7 +529,7 @@ public class Mnt_Linea extends javax.swing.JInternalFrame {
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
         if (prcs_repetidos.isNoneEmpty(txtnombre)) {
             if (prcs_repetidos.isSelected(Rdb_Activo, Rdb_Inactivo)) {
-                LineaDAO pisosdao = new LineaDAO();
+                MarcaDAO pisosdao = new MarcaDAO();
                 pisos.setNombre(txtnombre.getText());
                 if (Rdb_Activo.isSelected()) {
                     pisos.setEstado("1");
@@ -550,7 +550,7 @@ public class Mnt_Linea extends javax.swing.JInternalFrame {
     private void Btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_modificarMouseClicked
         if (prcs_repetidos.isNoneEmpty(txtnombre)) {
             if (prcs_repetidos.isSelected(Rdb_Activo, Rdb_Inactivo)) {
-                LineaDAO pisosdao = new LineaDAO();
+                MarcaDAO pisosdao = new MarcaDAO();
                 pisos.setCodigo(jLabel1.getText());
                 pisos.setNombre(txtnombre.getText());
                 if (Rdb_Activo.isSelected()) {

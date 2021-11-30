@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author Jefferson Dávila
  */
-public class LineaDAO {
+public class UnidadDAO {
 
     public static String codigoAuxiliar, nombreAuxiliar;
     private static final String SQL_INSERT = "insert into tbl_linea values(?,?,?)";
