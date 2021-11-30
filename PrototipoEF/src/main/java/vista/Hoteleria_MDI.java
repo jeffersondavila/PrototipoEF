@@ -24,6 +24,8 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
 
     private Mnt_Linea form_Mant_Pisos;
     private Mnt_Marca form_Mant_Horarios;
+    private Mnt_Bodega form_Mant_Bodega;
+    private Mnt_Unidad form_Mant_Unidad;
 
     ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
     public static JLabel Jl_logo = new JLabel();
@@ -82,6 +84,8 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
         Mnu_mantenimientos = new javax.swing.JMenu();
         MnI_piso = new javax.swing.JMenuItem();
         MnI_horario = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         Sbm_procesos = new javax.swing.JMenu();
         Sbm_herramientas = new javax.swing.JMenu();
         Sbm_ayuda = new javax.swing.JMenu();
@@ -130,6 +134,22 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
             }
         });
         Mnu_mantenimientos.add(MnI_horario);
+
+        jMenuItem1.setText("Mant. Bodega");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        Mnu_mantenimientos.add(jMenuItem1);
+
+        jMenuItem2.setText("Mant. Unidad");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        Mnu_mantenimientos.add(jMenuItem2);
 
         Sbm_catalogo.add(Mnu_mantenimientos);
 
@@ -185,7 +205,7 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
         form_Mant_Pisos.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
         form_Mant_Pisos.setVisible(true);
         form_Mant_Pisos.toFront();
-        bitacora.GuardarEnBitacora("log", "2004");
+        bitacora.GuardarEnBitacora("log", "2003");
     }//GEN-LAST:event_MnI_pisoActionPerformed
 
     private void MnI_horarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnI_horarioActionPerformed
@@ -199,6 +219,30 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
         form_Mant_Horarios.toFront();
         bitacora.GuardarEnBitacora("log", "2002");
     }//GEN-LAST:event_MnI_horarioActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        form_Mant_Bodega = new Mnt_Bodega();
+
+        Jdp_contenedor.add(form_Mant_Bodega);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = form_Mant_Bodega.getSize();
+        form_Mant_Bodega.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        form_Mant_Bodega.setVisible(true);
+        form_Mant_Bodega.toFront();
+        bitacora.GuardarEnBitacora("log", "2001");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        form_Mant_Unidad = new Mnt_Unidad();
+
+        Jdp_contenedor.add(form_Mant_Unidad);
+        Dimension desktopSize = Jdp_contenedor.getSize();
+        Dimension FrameSize = form_Mant_Unidad.getSize();
+        form_Mant_Unidad.setLocation((desktopSize.width - FrameSize.width) / 2, (desktopSize.height - FrameSize.height) / 2);
+        form_Mant_Unidad.setVisible(true);
+        form_Mant_Unidad.toFront();
+        bitacora.GuardarEnBitacora("log", "2004");
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,5 +275,7 @@ public class Hoteleria_MDI extends javax.swing.JFrame {
     public static javax.swing.JMenu Sbm_catalogo;
     public static javax.swing.JMenu Sbm_herramientas;
     public static javax.swing.JMenu Sbm_procesos;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }

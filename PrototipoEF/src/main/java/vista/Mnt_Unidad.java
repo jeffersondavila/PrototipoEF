@@ -1,9 +1,9 @@
 package vista;
 
 import datos.GuardarBitacora;
-import datos.MarcaDAO;
+import datos.UnidadDAO;
 import dominio.ProcesosRepetidos;
-import dominio.Marca;
+import dominio.Unidad;
 import java.awt.Color;
 import java.util.List;
 
@@ -12,13 +12,13 @@ import java.util.List;
  *
  * @author Jeff
  */
-public class Mnt_Marca extends javax.swing.JInternalFrame {
+public class Mnt_Unidad extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
-    Marca pisos = new Marca();
+    Unidad pisos = new Unidad();
     GuardarBitacora bitacora = new GuardarBitacora();
 
-    public Mnt_Marca() {
+    public Mnt_Unidad() {
         initComponents();
         diseño();
         actualizarTabla("");
@@ -26,8 +26,9 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     }
 
     public void diseño() {
-        this.setTitle("Mantenimiento de Marca");
+        this.setTitle("Mantenimiento de Unidad");
         txtnombre.setBorder(null);
+        txtnombre1.setBorder(null);
         Txt_buscar.setBorder(null);
         Rdb_Limpiar2.setVisible(false);
         prcs_repetidos.Cursor(Btn_ayuda, Btn_cancelar, Btn_guardar, Btn_modificar, Btn_reporte, Btn_buscar);
@@ -35,29 +36,30 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
 
     public void actualizarTabla(String codigo) {
         ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
-        MarcaDAO.codigoAuxiliar = codigo;
-        MarcaDAO.nombreAuxiliar = codigo;
-        String columnas[] = {"ID", "NOMBRE DE MARCA", "ESTADO"};
+        UnidadDAO.codigoAuxiliar = codigo;
+        UnidadDAO.nombreAuxiliar = codigo;
+        String columnas[] = {"ID", "NOMBRE DE UNIDAD", "MEDIDA", "ESTADO"};
         int cantidadcolumnas = columnas.length;
         prcs_repetidos.llenarColumnas(columnas, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
-        int tamaño[] = {75, 250, 75};
-        MarcaDAO pisosdao = new MarcaDAO();
-        List<Marca> piso = pisosdao.select();
-        for (Marca listaServicio : piso) {
+        int tamaño[] = {75, 250, 100, 75};
+        UnidadDAO pisosdao = new UnidadDAO();
+        List<Unidad> piso = pisosdao.select();
+        for (Unidad listaServicio : piso) {
             datos[0] = String.valueOf(listaServicio.getCodigo());
             datos[1] = String.valueOf(listaServicio.getNombre());
+            datos[2] = String.valueOf(listaServicio.getMedida());
             if (String.valueOf(listaServicio.getEstado()).equals("1")) {
-                datos[2] = "Activo";
+                datos[3] = "Activo";
             } else {
-                datos[2] = "Inactivo";
+                datos[3] = "Inactivo";
             }
             prcs_repetidos.llenarFilas(datos, tamaño, Tbl_Datos);
         }
     }
 
     public void Limpiar() {
-        prcs_repetidos.Limpiar(txtnombre, Txt_buscar);
+        prcs_repetidos.Limpiar(txtnombre, txtnombre1, Txt_buscar);
         Rdb_Limpiar2.setSelected(true);
     }
 
@@ -91,6 +93,9 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
         Btn_fondo_cancelar = new javax.swing.JPanel();
         Btn_cancelar = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        Lbl_id1 = new javax.swing.JLabel();
+        txtnombre1 = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
         Pnl_datos = new javax.swing.JPanel();
         Lbl_codigoNombre = new javax.swing.JLabel();
         Txt_buscar = new javax.swing.JTextField();
@@ -288,6 +293,14 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
             .addComponent(Btn_cancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
+        Lbl_id1.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        Lbl_id1.setForeground(new java.awt.Color(255, 255, 255));
+        Lbl_id1.setText("Medida:");
+
+        txtnombre1.setBackground(new java.awt.Color(36, 47, 65));
+        txtnombre1.setForeground(new java.awt.Color(255, 255, 255));
+        txtnombre1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
         javax.swing.GroupLayout Pnl_ingresoDatosLayout = new javax.swing.GroupLayout(Pnl_ingresoDatos);
         Pnl_ingresoDatos.setLayout(Pnl_ingresoDatosLayout);
         Pnl_ingresoDatosLayout.setHorizontalGroup(
@@ -296,21 +309,11 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lbl_id, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Lbl_estado)
-                            .addComponent(jLabel1))
+                        .addComponent(Lbl_id1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54)
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                                .addComponent(Rdb_Activo)
-                                .addGap(18, 18, 18)
-                                .addComponent(Rdb_Limpiar2)
-                                .addGap(18, 18, 18)
-                                .addComponent(Rdb_Inactivo))
-                            .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jSeparator1)
-                                .addComponent(txtnombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator2)
+                            .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
                         .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Btn_fondo_reporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -320,7 +323,24 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Btn_fondo_modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_fondo_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Btn_fondo_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
+                            .addComponent(Lbl_estado, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(54, 54, 54)
+                            .addComponent(Rdb_Activo)
+                            .addGap(18, 18, 18)
+                            .addComponent(Rdb_Limpiar2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                            .addComponent(Rdb_Inactivo))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pnl_ingresoDatosLayout.createSequentialGroup()
+                            .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Lbl_id, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1))
+                            .addGap(54, 54, 54)
+                            .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jSeparator1)
+                                .addComponent(txtnombre, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         Pnl_ingresoDatosLayout.setVerticalGroup(
@@ -332,17 +352,22 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                     .addComponent(Lbl_id))
                 .addGap(3, 3, 3)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Rdb_Limpiar2)
-                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Rdb_Activo)
-                            .addComponent(Lbl_estado)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtnombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Lbl_id1))
+                .addGap(3, 3, 3)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Lbl_estado)
                     .addGroup(Pnl_ingresoDatosLayout.createSequentialGroup()
-                        .addComponent(Rdb_Inactivo)
-                        .addGap(1, 1, 1)))
-                .addGap(47, 47, 47)
+                        .addGap(4, 4, 4)
+                        .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Rdb_Limpiar2)
+                            .addComponent(Rdb_Activo)
+                            .addComponent(Rdb_Inactivo))))
+                .addGap(6, 6, 6)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Pnl_ingresoDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -443,7 +468,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                                 .addComponent(Txt_buscar)
                                 .addComponent(Lbl_codigoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -520,10 +545,11 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_buscarMouseExited
 
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
-        if (prcs_repetidos.isNoneEmpty(txtnombre)) {
+        if (prcs_repetidos.isNoneEmpty(txtnombre, txtnombre1)) {
             if (prcs_repetidos.isSelected(Rdb_Activo, Rdb_Inactivo)) {
-                MarcaDAO pisosdao = new MarcaDAO();
+                UnidadDAO pisosdao = new UnidadDAO();
                 pisos.setNombre(txtnombre.getText());
+                pisos.setMedida(txtnombre1.getText());
                 if (Rdb_Activo.isSelected()) {
                     pisos.setEstado("1");
                 } else if (Rdb_Inactivo.isSelected()) {
@@ -531,7 +557,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                 }
                 pisosdao.insert(pisos);
                 actualizarTabla("");
-                prcs_repetidos.AlertaMensaje("guardada", "Marca", "exitosamente");
+                prcs_repetidos.AlertaMensaje("guardada", "Unidad", "exitosamente");
                 Limpiar();
                 bitacora.GuardarEnBitacora("Guardar", "2004");
             } else {
@@ -541,11 +567,12 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Btn_guardarMouseClicked
 
     private void Btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_modificarMouseClicked
-        if (prcs_repetidos.isNoneEmpty(txtnombre)) {
+        if (prcs_repetidos.isNoneEmpty(txtnombre, txtnombre1)) {
             if (prcs_repetidos.isSelected(Rdb_Activo, Rdb_Inactivo)) {
-                MarcaDAO pisosdao = new MarcaDAO();
+                UnidadDAO pisosdao = new UnidadDAO();
                 pisos.setCodigo(jLabel1.getText());
                 pisos.setNombre(txtnombre.getText());
+                pisos.setNombre(txtnombre1.getText());
                 if (Rdb_Activo.isSelected()) {
                     pisos.setEstado("1");
                 } else if (Rdb_Inactivo.isSelected()) {
@@ -553,7 +580,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                 }
                 pisosdao.update(pisos);
                 actualizarTabla("");
-                prcs_repetidos.AlertaMensaje("modificada", "Marca", "exitosamente");
+                prcs_repetidos.AlertaMensaje("modificada", "Unidad", "exitosamente");
                 Limpiar();
                 bitacora.GuardarEnBitacora("Modificar", "2004");
             } else {
@@ -565,7 +592,8 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
         if (evt.getClickCount() == 2) {
             jLabel1.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 0).toString());
             txtnombre.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 1).toString());
-            if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString().equals("Activo")) {
+            txtnombre1.setText(Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 2).toString());
+            if (Tbl_Datos.getValueAt(Tbl_Datos.getSelectedRow(), 3).toString().equals("Activo")) {
                 Rdb_Activo.setSelected(true);
             } else {
                 Rdb_Inactivo.setSelected(true);
@@ -609,6 +637,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     private javax.swing.JLabel Lbl_codigoNombre;
     private javax.swing.JLabel Lbl_estado;
     private javax.swing.JLabel Lbl_id;
+    private javax.swing.JLabel Lbl_id1;
     private javax.swing.JPanel Pnl_datos;
     private javax.swing.JPanel Pnl_ingresoDatos;
     private javax.swing.JRadioButton Rdb_Activo;
@@ -619,7 +648,9 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTextField txtnombre;
+    private javax.swing.JTextField txtnombre1;
     // End of variables declaration//GEN-END:variables
 }

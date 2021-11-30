@@ -1,24 +1,23 @@
 package vista;
 
 import datos.GuardarBitacora;
-import datos.MarcaDAO;
+import datos.BodegaDAO;
 import dominio.ProcesosRepetidos;
-import dominio.Marca;
+import dominio.Bodega;
 import java.awt.Color;
 import java.util.List;
-
 
 /**
  *
  * @author Jeff
  */
-public class Mnt_Marca extends javax.swing.JInternalFrame {
+public class Mnt_Bodega extends javax.swing.JInternalFrame {
 
     ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
-    Marca pisos = new Marca();
+    Bodega pisos = new Bodega();
     GuardarBitacora bitacora = new GuardarBitacora();
 
-    public Mnt_Marca() {
+    public Mnt_Bodega() {
         initComponents();
         diseño();
         actualizarTabla("");
@@ -26,7 +25,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     }
 
     public void diseño() {
-        this.setTitle("Mantenimiento de Marca");
+        this.setTitle("Mantenimiento de Bodegas");
         txtnombre.setBorder(null);
         Txt_buscar.setBorder(null);
         Rdb_Limpiar2.setVisible(false);
@@ -35,16 +34,16 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
 
     public void actualizarTabla(String codigo) {
         ProcesosRepetidos prcs_repetidos = new ProcesosRepetidos();
-        MarcaDAO.codigoAuxiliar = codigo;
-        MarcaDAO.nombreAuxiliar = codigo;
-        String columnas[] = {"ID", "NOMBRE DE MARCA", "ESTADO"};
+        BodegaDAO.codigoAuxiliar = codigo;
+        BodegaDAO.nombreAuxiliar = codigo;
+        String columnas[] = {"ID", "NOMBRE DE BODEGA", "ESTADO"};
         int cantidadcolumnas = columnas.length;
         prcs_repetidos.llenarColumnas(columnas, cantidadcolumnas, Tbl_Datos);
         String datos[] = new String[cantidadcolumnas];
         int tamaño[] = {75, 250, 75};
-        MarcaDAO pisosdao = new MarcaDAO();
-        List<Marca> piso = pisosdao.select();
-        for (Marca listaServicio : piso) {
+        BodegaDAO pisosdao = new BodegaDAO();
+        List<Bodega> piso = pisosdao.select();
+        for (Bodega listaServicio : piso) {
             datos[0] = String.valueOf(listaServicio.getCodigo());
             datos[1] = String.valueOf(listaServicio.getNombre());
             if (String.valueOf(listaServicio.getEstado()).equals("1")) {
@@ -522,7 +521,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     private void Btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_guardarMouseClicked
         if (prcs_repetidos.isNoneEmpty(txtnombre)) {
             if (prcs_repetidos.isSelected(Rdb_Activo, Rdb_Inactivo)) {
-                MarcaDAO pisosdao = new MarcaDAO();
+                BodegaDAO pisosdao = new BodegaDAO();
                 pisos.setNombre(txtnombre.getText());
                 if (Rdb_Activo.isSelected()) {
                     pisos.setEstado("1");
@@ -531,7 +530,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                 }
                 pisosdao.insert(pisos);
                 actualizarTabla("");
-                prcs_repetidos.AlertaMensaje("guardada", "Marca", "exitosamente");
+                prcs_repetidos.AlertaMensaje("guardada", "Bodega", "exitosamente");
                 Limpiar();
                 bitacora.GuardarEnBitacora("Guardar", "2004");
             } else {
@@ -543,7 +542,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
     private void Btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_modificarMouseClicked
         if (prcs_repetidos.isNoneEmpty(txtnombre)) {
             if (prcs_repetidos.isSelected(Rdb_Activo, Rdb_Inactivo)) {
-                MarcaDAO pisosdao = new MarcaDAO();
+                BodegaDAO pisosdao = new BodegaDAO();
                 pisos.setCodigo(jLabel1.getText());
                 pisos.setNombre(txtnombre.getText());
                 if (Rdb_Activo.isSelected()) {
@@ -553,7 +552,7 @@ public class Mnt_Marca extends javax.swing.JInternalFrame {
                 }
                 pisosdao.update(pisos);
                 actualizarTabla("");
-                prcs_repetidos.AlertaMensaje("modificada", "Marca", "exitosamente");
+                prcs_repetidos.AlertaMensaje("modificada", "Bodega", "exitosamente");
                 Limpiar();
                 bitacora.GuardarEnBitacora("Modificar", "2004");
             } else {
