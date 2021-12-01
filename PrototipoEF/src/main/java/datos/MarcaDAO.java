@@ -5,7 +5,7 @@
  */
 package datos;
 
-import dominio.Linea;
+import dominio.Marca;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,13 +17,13 @@ import java.util.List;
  *
  * @author Jefferson Dávila
  */
-public class LineaDAO {
+public class MarcaDAO {
 
     public static String codigoAuxiliar, nombreAuxiliar;
-    private static final String SQL_INSERT = "insert into tbl_linea values(?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_linea SET nombre_linea=?, estatus_linea=? WHERE PK_codigo_linea=?";
+    private static final String SQL_INSERT = "insert into tbl_marca values(?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_marca SET nombre_marca=?, estatus_marca=? WHERE PK_codigo_marca=?";
 
-    public int insert(Linea piso) {
+    public int insert(Marca piso) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -34,9 +34,7 @@ public class LineaDAO {
             stmt.setString(2, piso.getNombre());
             stmt.setString(3, piso.getEstado());
 
-            //System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
-            //System.out.println("Registros afectados:" + rows);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
@@ -47,26 +45,26 @@ public class LineaDAO {
         return rows;
     }
 
-    public List<Linea> select() {
+    public List<Marca> select() {
 
-        String SQL_SELECT = "SELECT * FROM tbl_linea WHERE PK_codigo_linea LIKE '%"+codigoAuxiliar+"%' OR PK_codigo_linea LIKE '%"+nombreAuxiliar+"%'";
+        String SQL_SELECT = "SELECT * FROM tbl_marca WHERE PK_codigo_marca LIKE '%"+codigoAuxiliar+"%' OR PK_codigo_marca LIKE '%"+nombreAuxiliar+"%'";
 
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Linea piso = null;
-        List<Linea> pisos = new ArrayList<Linea>();
+        Marca piso = null;
+        List<Marca> pisos = new ArrayList<Marca>();
 
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                String id = rs.getString("PK_codigo_linea");
-                String nombre = rs.getString("nombre_linea");
-                String estado = String.valueOf(rs.getInt("estatus_linea"));
+                String id = rs.getString("PK_codigo_marca");
+                String nombre = rs.getString("nombre_marca");
+                String estado = String.valueOf(rs.getInt("estatus_marca"));
 
-                piso = new Linea();
+                piso = new Marca();
                 piso.setCodigo(id);
                 piso.setNombre(nombre);
                 piso.setEstado(estado);
@@ -85,7 +83,7 @@ public class LineaDAO {
         return pisos;
     }
     
-    public int update(Linea linea) {
+    public int update(Marca linea) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
