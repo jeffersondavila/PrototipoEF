@@ -5,7 +5,7 @@
  */
 package datos;
 
-import dominio.Linea;
+import dominio.Unidad;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,10 +20,10 @@ import java.util.List;
 public class UnidadDAO {
 
     public static String codigoAuxiliar, nombreAuxiliar;
-    private static final String SQL_INSERT = "insert into tbl_linea values(?,?,?)";
-    private static final String SQL_UPDATE = "UPDATE tbl_linea SET nombre_linea=?, estatus_linea=? WHERE PK_codigo_linea=?";
+    private static final String SQL_INSERT = "insert into tbl_unidad values(?,?,?,?)";
+    private static final String SQL_UPDATE = "UPDATE tbl_unidad SET nombre_unidad=?, medida_acronimo=?, estatus_unidad=? WHERE PK_codigo_unidad=?";
 
-    public int insert(Linea piso) {
+    public int insert(Unidad piso) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -32,11 +32,10 @@ public class UnidadDAO {
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, "0");
             stmt.setString(2, piso.getNombre());
-            stmt.setString(3, piso.getEstado());
+            stmt.setString(3, piso.getMedida());
+            stmt.setString(4, piso.getEstado());
 
-            //System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
-            //System.out.println("Registros afectados:" + rows);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
@@ -47,28 +46,30 @@ public class UnidadDAO {
         return rows;
     }
 
-    public List<Linea> select() {
+    public List<Unidad> select() {
 
-        String SQL_SELECT = "SELECT * FROM tbl_linea WHERE PK_codigo_linea LIKE '%"+codigoAuxiliar+"%' OR PK_codigo_linea LIKE '%"+nombreAuxiliar+"%'";
+        String SQL_SELECT = "SELECT * FROM tbl_unidad WHERE PK_codigo_unidad LIKE '%"+codigoAuxiliar+"%' OR PK_codigo_unidad LIKE '%"+nombreAuxiliar+"%'";
 
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Linea piso = null;
-        List<Linea> pisos = new ArrayList<Linea>();
+        Unidad piso = null;
+        List<Unidad> pisos = new ArrayList<Unidad>();
 
         try {
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                String id = rs.getString("PK_codigo_linea");
-                String nombre = rs.getString("nombre_linea");
-                String estado = String.valueOf(rs.getInt("estatus_linea"));
+                String id = rs.getString("PK_codigo_unidad");
+                String nombre = rs.getString("nombre_unidad");
+                String medida = rs.getString("medida_acronimo");
+                String estado = String.valueOf(rs.getInt("estatus_unidad"));
 
-                piso = new Linea();
+                piso = new Unidad();
                 piso.setCodigo(id);
                 piso.setNombre(nombre);
+                piso.setMedida(medida);
                 piso.setEstado(estado);
                 
                 pisos.add(piso);
@@ -85,7 +86,7 @@ public class UnidadDAO {
         return pisos;
     }
     
-    public int update(Linea linea) {
+    public int update(Unidad linea) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -95,8 +96,9 @@ public class UnidadDAO {
 
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setString(1, linea.getNombre());
-            stmt.setString(2, linea.getEstado());
-            stmt.setString(3, linea.getCodigo());
+            stmt.setString(2, linea.getMedida());
+            stmt.setString(3, linea.getEstado());
+            stmt.setString(4, linea.getCodigo());
 
             rows = stmt.executeUpdate();
 

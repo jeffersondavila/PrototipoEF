@@ -6,11 +6,6 @@ import dominio.ProcesosRepetidos;
 import dominio.Linea;
 import java.awt.Color;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import seguridad.vista.GenerarPermisos;
-import seguridad.vista.Login_LD;
 
 /**
  *
@@ -22,9 +17,6 @@ public class Mnt_Linea extends javax.swing.JInternalFrame {
     Linea pisos = new Linea();
     GuardarBitacora bitacora = new GuardarBitacora();
 
-    /**
-     * Creates new form Mnt_¨Pisos
-     */
     public Mnt_Linea() {
         initComponents();
         diseño();
